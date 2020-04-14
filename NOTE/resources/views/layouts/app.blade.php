@@ -8,7 +8,6 @@
 </head>
 <body>
 <div id="app">
-  <p><example /></p>
   <App />
 </div>
 </body>
