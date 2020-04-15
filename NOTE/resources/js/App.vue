@@ -1,11 +1,15 @@
 <template>
   <div>
-    <Board />
+    <header>
+      <h1>My Note</h1>
+      <RouterView />
+    </header>
     <main>
-      <div class="container">
-        <RouterView />
-      </div>
+      <Board />
     </main>
+    <footer>
+
+    </footer>
   </div>
 </template>
 

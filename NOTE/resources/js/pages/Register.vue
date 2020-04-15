@@ -2,6 +2,6 @@
   <div>
     <router-link to="Login">Login</router-link>
     <a href="/login">login</a>
-    <h1>Register</h1>
+    <h3>Register</h3>
   </div>
 </template>
