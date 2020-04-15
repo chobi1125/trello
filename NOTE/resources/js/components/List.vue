@@ -6,7 +6,7 @@
       <!-- リスト内のカードのtotal数のカウント -->
       <div class="deletelist" @click="removeList">×</div>
     </div>
-    <draggable group="cards">
+    <!-- <draggable group="cards"> -->
     <!-- group属性を使うことで他のコンポーネントへドラッグ&ドロップさせる、または他のコンポーネントからのドラッグ&ドロップを受け付けることができます。互いのコンポーネントを同じnameにすることで実装できます。 -->
       <card v-for="(item, index) in cards"
         :body="item.body"
@@ -17,20 +17,20 @@
       <!-- Cardコンポーネントに必要なデータを渡し -->
       <!-- 受け渡すカードの配列データcardsをv-forディレクティブを使って展開 -->
       <card-add :listIndex="listIndex" />
-    </draggable>
+    <!-- </draggable> -->
   </div>
 </template>
 
 <script>
 import CardAdd from './CardAdd'
 import Card from './Card'
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 
 export default {
   components: {
     CardAdd,
     Card,
-    draggable
+    // draggable
   },
   props: {
   // propsには、親コンポーネントから受け取るデータを定義,受け取ったデータはdataプロパティと同じようにアクセス可能
