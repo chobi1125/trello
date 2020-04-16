@@ -1908,7 +1908,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Board_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Board.vue */ "./resources/js/components/Board.vue");
 //
 //
 //
@@ -1930,17 +1929,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      listing: [] // 追加
-
+      listing: [],
+      // 追加
+      card: []
     };
   },
-  components: {
-    Board: _components_Board_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
+  components: {},
   // 以下mountedプロパティ追加
   mounted: function mounted() {
     var _this = this;
@@ -1951,6 +1952,9 @@ __webpack_require__.r(__webpack_exports__);
       // this.$http~についてはAxiosを使ったAPIの処理です。 /api/listにアクセスし、取得した結果をthis.listingに代入
       // thenで成功した場合の処理をかける
       _this.listing = response.data; // 
+    });
+    this.$http.get("/api/card").then(function (response) {
+      _this.card = response.data;
     });
   }
 });
@@ -2739,22 +2743,42 @@ var render = function() {
   return _c("div", [
     _c(
       "header",
-      [_c("h1", [_vm._v("My Note")]), _vm._v(" "), _c("RouterView")],
+      [
+        _c(
+          "h1",
+          [_c("router-link", { attrs: { to: "/" } }, [_vm._v("My Note")])],
+          1
+        ),
+        _vm._v(" "),
+        _c("router-link", { attrs: { to: "Login" } }, [_vm._v("ログイン")]),
+        _vm._v(" "),
+        _c("router-link", { attrs: { to: "Register" } }, [_vm._v("会員登録")])
+      ],
       1
     ),
     _vm._v(" "),
-    _c("main", [_c("Board")], 1),
+    _c("main", [_c("RouterView")], 1),
     _vm._v(" "),
     _c(
       "footer",
-      _vm._l(_vm.listing, function(list, index) {
-        return _c("div", { key: index }, [
-          _c("h1", [_vm._v(_vm._s(list.created_at))]),
-          _vm._v(" "),
-          _c("h1", [_vm._v(_vm._s(list.title))])
-        ])
-      }),
-      0
+      [
+        _c("h4", [_vm._v("以下はapi/listで取得したデータです。")]),
+        _vm._v(" "),
+        _vm._l(_vm.listing, function(list, index) {
+          return _c("div", { key: index }, [
+            _c("p", [_vm._v(_vm._s(list.title))])
+          ])
+        }),
+        _vm._v(" "),
+        _c("h4", [_vm._v("以下はapi/cardで取得したデータです。")]),
+        _vm._v(" "),
+        _vm._l(_vm.card, function(card, index) {
+          return _c("div", { key: index }, [
+            _c("p", [_vm._v(_vm._s(card.title) + " " + _vm._s(card.status))])
+          ])
+        })
+      ],
+      2
     )
   ])
 }
@@ -3034,19 +3058,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("router-link", { attrs: { to: "/" } }, [_vm._v("register")]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "/" } }, [_vm._v("register")]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Login")])
-    ],
-    1
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h3", [_vm._v("Login")])])
+  }
+]
 render._withStripped = true
 
 
@@ -3068,19 +3089,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("router-link", { attrs: { to: "Login" } }, [_vm._v("Login")]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "/login" } }, [_vm._v("login")]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Register")])
-    ],
-    1
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h3", [_vm._v("Register")])])
+  }
+]
 render._withStripped = true
 
 
@@ -19292,29 +19310,52 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-// import './bootstrap' //不要説？？
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$http = axios__WEBPACK_IMPORTED_MODULE_4___default.a;
-var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.prototype.$http = axios__WEBPACK_IMPORTED_MODULE_5___default.a;
+var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#app',
-  router: _router__WEBPACK_IMPORTED_MODULE_1__["default"],
-  store: _store__WEBPACK_IMPORTED_MODULE_2__["default"],
+  router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
+  store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],
   components: {
-    App: _App_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    App: _App_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   } // template: '<App />'// ルートコンポーネントを描画する
 
 });
+
+/***/ }),
+
+/***/ "./resources/js/bootstrap.js":
+/*!***********************************!*\
+  !*** ./resources/js/bootstrap.js ***!
+  \***********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./resources/js/util.js");
+
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // Ajaxリクエストであることを示すヘッダーを付与する
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.interceptors.request.use(function (config) {
+  // クッキーからトークンを取り出してヘッダーに添付する
+  config.headers['X-XSRF-TOKEN'] = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCookieValue"])('XSRF-TOKEN');
+  return config;
+}); // bootstrap.js では Ajax 通信で用いる Axios ライブラリの設定を記述。
 
 /***/ }),
 
@@ -19783,6 +19824,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _pages_Register_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Register.vue */ "./resources/js/pages/Register.vue");
 /* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
+/* harmony import */ var _components_Board_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Board.vue */ "./resources/js/components/Board.vue");
+
 
 
 
@@ -19793,6 +19836,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 var routes = [{
   path: '/',
+  component: _components_Board_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  path: '/register',
   component: _pages_Register_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/login',
@@ -19824,51 +19870,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-var savedLists = localStorage.getItem('trello-lists'); // ストアの状態はリロードされると初期化されるので、リロードしても、初期化されないようにストアのstateへ保存時に、localStorageにも同じ状態を保存できるように実装する。
-// localStorageに保存したリストを取得。localStorageは保存するデータを「キーと値」のセットで扱う。getItem('ここ！')に設定したキーで保存したデータを取得。
-
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  // 上記のコードでストアインスタンスを取得し、main.jsでインポートできるように後述export default
   state: {
-    lists: savedLists ? JSON.parse(savedLists) : [// mutationsでリストのデータの状態を更新できるように、stateにリストを定義
-    // localStorageにはJSON形式の文字列型でデータが保存されているので、取得するときにはJSON.parse(取得するデータ)でオブジェクトに変換する必要
-    {
-      title: 'Backlog',
-      cards: [{
-        body: 'English'
-      }, {
-        body: 'Mathematics'
-      }]
-    }, {
-      title: 'Todo',
-      cards: [{
-        body: 'Science'
-      }]
-    }, {
-      title: 'Doing',
+    lists: [{
+      title: '',
       cards: []
-    } // リスト内でカードを複数持てるように、配列型でcardsを定義
-    ] // localStorageに保存されたリストがあれば取得、なければデフォルトのリスト配列を設置。
-
+    }]
   },
   actions: {
     addlist: function addlist(context, payload) {
       context.commit('addlist', payload);
     },
-    // ListAdd.vueで呼び出すよう定義したactionsを使って、mutationsをコミット
-    // actionsは第一引数にcontextというストアインスタンスのメソッドやプロパティを呼び出せるオブジェクトを受け取ることができる。第二引数には、mutationsに渡す引数を指定。
     removelist: function removelist(context, payload) {
       context.commit('removelist', payload);
     },
-    // リスト削除のミューテーション呼び出し
     addCardToList: function addCardToList(context, payload) {
       context.commit('addCardToList', payload);
     },
-    // カード追加のミューテーション呼び出し
     removeCardFromList: function removeCardFromList(context, payload) {
       context.commit('removeCardFromList', payload);
-    } // カード削除のミューテーション呼び出し
-
+    }
   },
   mutations: {
     addlist: function addlist(state, payload) {
@@ -19877,13 +19898,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         cards: []
       });
     },
-    // addListメソッドはstateのデータへリストの追加を行う。
-    // mutationsは第一引数でstate、第二引数ではコミット時に受け取る引数payloadを指定できます。payloadはオブジェクト型で受け取ると、複数のプロパティを受け取ることができるため、推奨されています。
-    // mutationsのメソッド内で非同期通信も一緒に行った場合、デバッグでデータの状態がいつ変更されたか追うことができない。非同期通信はactionsで。かつmutationsはあくまでもストアの状態の変更だけを行うことにする。
     removelist: function removelist(state, payload) {
       state.lists.splice(payload.listIndex, 1);
     },
-    // removelistでは受け取ったリストのインデックスを使ってspliceでリストを削除
     addCardToList: function addCardToList(state, payload) {
       state.lists[payload.listIndex].cards.push({
         body: payload.body
@@ -19901,16 +19918,65 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       });
       return count;
     }
-  }
+  },
+  modules: {}
 });
-store.subscribe(function (mutation, state) {
-  localStorage.setItem('trello-lists', JSON.stringify(state.lists));
-}); // データの状態を更新後にlocalStorageへデータの状態を保存
-// 保存するときはlocalStorage.setItem('設定するキー', 文字列型のデータ)のように任意のキーを設定して、データを文字列型に変換して保存
-// subscribeはストアのインスタンスメソッドで、全てのmutationの後に呼ばれます。
-// 第一引数にmutationインスタンス、第二引数にmutation後のデータの状態を受け取ります。これでリロードしてもストアのデータの状態は維持される。
-
 /* harmony default export */ __webpack_exports__["default"] = (store);
+
+/***/ }),
+
+/***/ "./resources/js/util.js":
+/*!******************************!*\
+  !*** ./resources/js/util.js ***!
+  \******************************/
+/*! exports provided: getCookieValue, OK, CREATED, INTERNAL_SERVER_ERROR */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookieValue", function() { return getCookieValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OK", function() { return OK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATED", function() { return CREATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+/**
+ * クッキーの値を取得する
+ * @param {String} searchKey 検索するキー
+ * @returns {String} キーに対応する値
+ */
+// 会員登録やログインの機能を実装する前に、CSRF 対策を実装します。サーバサイドの API には GET 以外のメソッドでの通信時に CSRF トークンのチェックが入りますので、ストアを用いた API 呼び出し箇所を実装する前に用意しておく必要があります。
+function getCookieValue(searchKey) {
+  if (typeof searchKey === 'undefined') {
+    return '';
+  }
+
+  var val = '';
+  document.cookie.split(';').forEach(function (cookie) {
+    var _cookie$split = cookie.split('='),
+        _cookie$split2 = _slicedToArray(_cookie$split, 2),
+        key = _cookie$split2[0],
+        value = _cookie$split2[1];
+
+    if (key === searchKey) {
+      return val = value;
+    }
+  });
+  return val;
+}
+var OK = 200;
+var CREATED = 201;
+var INTERNAL_SERVER_ERROR = 500;
 
 /***/ }),
 

@@ -1,35 +1,37 @@
 <template>
   <div>
     <header>
-      <h1>My Note</h1>
-      <RouterView />
+      <h1><router-link to="/">My Note</router-link></h1>
+      <router-link to="Login">ログイン</router-link>
+      <router-link to="Register">会員登録</router-link>
     </header>
     <main>
-      <Board />
+      <RouterView />
     </main>
     <footer>
-      <!-- ここから追加 -->
+      <h4>以下はapi/listで取得したデータです。</h4>
       <div v-for="(list, index) in listing" :key="index">
         <!-- v-for="(info, index) in listing"はlisting配列について繰り返し処理 -->
-        <h1>{{list.created_at}}</h1>
-        <h1>{{list.title}}</h1>
+        <p>{{list.title}}</p>
       </div>
-      <!-- ここまで追加 -->
+      <h4>以下はapi/cardで取得したデータです。</h4>
+      <div v-for="(card, index) in card" :key="index">
+        <!-- v-for="(info, index) in listing"はlisting配列について繰り返し処理 -->
+        <p>{{card.title}} {{card.status}}</p>
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
-import Board from './components/Board.vue'
-
 export default {
   data() {
     return {
-      listing :[] // 追加
+      listing :[], // 追加
+      card :[]
     };
   },
   components: {
-    Board
   },
   // 以下mountedプロパティ追加
   mounted() { 
@@ -40,6 +42,9 @@ export default {
     // thenで成功した場合の処理をかける
       this.listing = response.data;
       // 
+    });
+    this.$http.get("/api/card").then(response => {
+      this.card = response.data;
     });
   },
 }
