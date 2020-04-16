@@ -6,7 +6,6 @@
       action="/register"
       id="register"
       method="post"
-      tag="form"
       @submit.prevent="register()" 
     >
       <input type="hidden" name="_token" :value="csrf" />
