@@ -1,51 +1,62 @@
 <template>
   <div>
-    <header>
+    <header style="background-color:rgba(0, 217, 255, 0.287)">
       <h1><router-link to="/">My Note</router-link></h1>
-      <router-link to="Login">ログイン</router-link>
-      <router-link to="Register">会員登録</router-link>
+      <ul v-if="auth.length === 0">
+        <!-- v-if="プロパティ"でプロパティがtrueの時処理。lengthプロパティは配列の要素の数。 -->
+        <router-link to="login">ログイン</router-link>
+        <router-link to="register">会員登録</router-link>
+      </ul>
+      <ul v-if="auth.length === 0">
+        Hello user
+        <a @click="logout">ログアウト</a>
+        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+          <input type="hidden" name="_token" :value="csrf" />
+        </form>
+      </ul>
     </header>
     <main>
-      <RouterView />
+      <RouterView
+      :lists="lists"
+      :cards="cards"
+      />
     </main>
+
     <footer>
-      <h4>以下はapi/listで取得したデータです。</h4>
-      <div v-for="(list, index) in listing" :key="index">
-        <!-- v-for="(info, index) in listing"はlisting配列について繰り返し処理 -->
-        <p>{{list.title}}</p>
-      </div>
-      <h4>以下はapi/cardで取得したデータです。</h4>
-      <div v-for="(card, index) in card" :key="index">
-        <!-- v-for="(info, index) in listing"はlisting配列について繰り返し処理 -->
-        <p>{{card.title}} {{card.status}}</p>
-      </div>
     </footer>
+
   </div>
 </template>
 
 <script>
 export default {
+    props: {
+    auth: {
+      type: Object | Array,
+      required: true
+    },
+   },
   data() {
     return {
-      listing :[], // 追加
-      card :[]
+      lists :'',
+      cards :'',
+      csrf: document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
     };
   },
-  components: {
-  },
-  // 以下mountedプロパティ追加
   mounted() { 
-  // mounted() はVueのインスタンスライフサイクルフックと呼ばれる関数
-  // 基本的に画面描画時の初期処理を実行するとき(API通信など)にmounted()で処理を定義することが多い※インスタンスが生成された後実行。
     this.$http.get("/api/list").then(response => {
-    // this.$http~についてはAxiosを使ったAPIの処理です。 /api/listにアクセスし、取得した結果をthis.listingに代入
-    // thenで成功した場合の処理をかける
-      this.listing = response.data;
-      // 
+      this.lists = response.data;
     });
     this.$http.get("/api/card").then(response => {
-      this.card = response.data;
+      this.cards = response.data;
     });
   },
+  methods: {
+    logout() {
+      document.querySelector("#logout-form").submit();
+    }
+  }
 }
 </script>

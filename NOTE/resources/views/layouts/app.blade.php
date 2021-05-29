@@ -12,7 +12,11 @@
 </head>
 <body>
 <div id="app">
-  <App />
+  <!-- <App :auth="{{ Auth::user() ?? '[]' }}"/> -->
+  <!-- <App :auth="['chobi','tepi','pacho']"/> -->
+  <App :auth='[]'/>
+  <!-- <App :auth="{name : 'pero' ,age : 15}" /> -->
+  <!-- <app auth="{{ Auth::user() }}" /> -->
 </div>
 </body>
 <!-- <script src="{{ mix('js/app.js') }}"></script> -->
